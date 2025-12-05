@@ -1,0 +1,19 @@
+name: Notifications
+on:
+  schedule:
+    - cron: '0 * * * *'       # Каждый час: reminders
+    - cron: '0 17 * * *'      # 20:00 Minsk: summary
+    - cron: '0 18 * * *'      # 21:00 Minsk: planning
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Task reminders
+        if: github.event.schedule == '0 * * * *'
+        run: curl -X GET "${{ secrets.SUPABASE_URL }}/functions/v1/planner-bot/cron/task-reminders"
+      - name: Daily summary
+        if: github.event.schedule == '0 17 * * *'
+        run: curl -X GET "${{ secrets.SUPABASE_URL }}/functions/v1/planner-bot/cron/daily-summary"
+      - name: Planning reminder
+        if: github.event.schedule == '0 18 * * *'
+        run: curl -X GET "${{ secrets.SUPABASE_URL }}/functions/v1/planner-bot/cron/planning-reminder"
