@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Liquid Glass стиль iOS 19 */
+.glass-card {
+  @apply bg-[#212025]/60 backdrop-blur-xl border border-white/10 rounded-glass;
+}
+
+.glass-button {
+  @apply bg-primary/20 backdrop-blur-md border border-primary/30 text-primary rounded-glass;
+}
